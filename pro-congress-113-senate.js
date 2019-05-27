@@ -7,8 +7,8 @@ var data =
        {
           "congress": "115",
           "chamber": "Senate",
-          
-          
+
+
           "num_results": 105,
           "offset": 0,
           "members": [
@@ -2618,7 +2618,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "1",
-                  
+
                   "total_votes": 72,
                   "missed_votes": 1,
                   "total_present": 0,
@@ -4846,4 +4846,3 @@ var data =
        }
     ]
  }
- 

@@ -7,8 +7,8 @@ var data =
        {
           "congress": "115",
           "chamber": "House",
-          
-          
+
+
           "num_results": 456,
           "offset": 0,
           "members": [
@@ -502,7 +502,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "2",
-                  
+
                   "total_votes": 116,
                   "missed_votes": 1,
                   "total_present": 0,
@@ -1573,7 +1573,7 @@ var data =
                   "district": "At-Large",
                   "at_large": true,
                   "geoid": "6698"
-                  
+
                 },
                             {
                   "id": "B001295",
@@ -7184,7 +7184,7 @@ var data =
                   "district": "At-Large",
                   "at_large": true,
                   "geoid": "7298"
-                  
+
                 },
                             {
                   "id": "G000289",
@@ -8274,7 +8274,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "2",
-                  
+
                   "total_votes": 84,
                   "missed_votes": 0,
                   "total_present": 0,
@@ -9562,7 +9562,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "2",
-                  
+
                   "total_votes": 78,
                   "missed_votes": 0,
                   "total_present": 0,
@@ -13380,7 +13380,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "2",
-                  
+
                   "total_votes": 84,
                   "missed_votes": 1,
                   "total_present": 0,
@@ -14037,7 +14037,7 @@ var data =
                   "district": "At-Large",
                   "at_large": true,
                   "geoid": "1198"
-                  
+
                 },
                             {
                   "id": "N000181",
@@ -14956,7 +14956,7 @@ var data =
                   "district": "At-Large",
                   "at_large": true,
                   "geoid": "7898"
-                  
+
                 },
                             {
                   "id": "P000607",
@@ -15415,7 +15415,7 @@ var data =
                   "district": "At-Large",
                   "at_large": true,
                   "geoid": "6098"
-                  
+
                 },
                             {
                   "id": "R000606",
@@ -16886,7 +16886,7 @@ var data =
                   "district": "At-Large",
                   "at_large": true,
                   "geoid": "6998"
-                  
+
                 },
                             {
                   "id": "S001156",
@@ -17102,7 +17102,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "2",
-                  
+
                   "total_votes": 84,
                   "missed_votes": 1,
                   "total_present": 0,
@@ -20368,7 +20368,7 @@ var data =
                   "dw_nominate": null,
                   "ideal_point": null,
                   "seniority": "2",
-                  
+
                   "total_votes": 79,
                   "missed_votes": 10,
                   "total_present": 0,
@@ -20986,4 +20986,3 @@ var data =
        }
     ]
  }
- 
