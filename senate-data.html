@@ -5,68 +5,99 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <style>
+    /* Quito los márgenes y bordes predeterminados por bootstrap para navbar
+        .navbar {
+          margin-bottom: 0;
+          border-radius: 0;
+        }*/
+
+        /* Le agrego un fondo gris claro y algo de margen */
+        footer {
+          background-color: #f2f2f2;
+          padding: 25px;
+        }
+      </style>
     </head>
 
     <body>
-        <nav>
-          <div class="container">
-            <div>
-              <a href="#">TGIF</a>
+<!--        <header>
+          <div class="page-header">
+            <h1><a href="#">TGIF</a></h1>
+          </div>
+
+       </header>
+-->
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">TGIF</a>
             </div>
-            <ul >
-              <li><a href="#">Home</a></li>
-              <li >
-                <a href="#">Congress 113</a>
-                <ul >
-                  <li><a href="#">Senate</a></li>
-                  <li><a href="#">House</a></li>
-                </ul>
-              </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Senate</a></li>
+                      <li><a href="#">House</a></li>
+                    </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </nav>
 
+        <div class="container">
 
-        <header>
-            <div class="container">
-            	<p>https://www.whitehouse.gov/the_press_office/TransparencyandOpenGovernment</p>
+          <h2>Senators</h2>
+          <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
 
-            </div>
-		   </header>
-       <div class="table-responsive">
-         <table class="table" id="senate-data"></table>
-       </div>
-</body>
+          <div class="table-responsive">
+          <table class="table" id="senate-data"></table>
 
-	<script src="pro-congress-113-senate.js"></script>
-	<script type="text/javascript">
+          </div>
+        </div>
 
-		var arreglo=data.results[0].members;
+        <footer class="container-fluid text-center">
+          <p>2016 TGIF | All Rights Reserved</p>
+        </footer>
+    </body>
 
-		let drawSenateTable = (arreglo) => {
-			var pro=document.getElementById("senate-data");
-			var tabla="<thead class='thead-dark'><tr><th>Full Name</th><th>Party</th><th>State</th><th>Seniority</th><th>Percentage of votes</th></tr></thead>";
-			console.log(arreglo.length);
-			for (let i=0;i<arreglo.length;i++)
-			{
-			tabla +="<tr>";
-			console.log(arreglo[i].last_name+arreglo[i].first_name+arreglo[i].middle_name);
-			if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
-			{
-			tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>"
-			}
-			else if(arreglo[i].middle_name==null)
-			{
-				tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>"
-			}
-			tabla+="<td>"+" "+arreglo[i].party+" "+"</td>"
-			tabla+="<td>"+" "+arreglo[i].state+" "+"</td>"
-			tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>"
-			tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>"
-			}
-			pro.innerHTML=tabla;
-		}
-		drawSenateTable(arreglo);
+  	<script src="pro-congress-113-senate.js"></script>
+  	<script type="text/javascript">
+
+  		var arreglo=data.results[0].members;
+
+  		let drawSenateTable = (arreglo) => {
+  			var pro=document.getElementById("senate-data");
+  			var tabla="<thead class='thead-dark'><tr><th>Full Name</th><th>Party</th><th>State</th><th>Seniority</th><th>Percentage of votes</th></tr></thead>";
+  			console.log(arreglo.length);
+  			for (let i=0;i<arreglo.length;i++)
+  			{
+  			tabla +="<tr>";
+  			console.log(arreglo[i].last_name+arreglo[i].first_name+arreglo[i].middle_name);
+  			if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
+  			{
+  			tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>"
+  			}
+  			else if(arreglo[i].middle_name==null)
+  			{
+  				tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>"
+  			}
+  			tabla+="<td>"+" "+arreglo[i].party+" "+"</td>"
+  			tabla+="<td>"+" "+arreglo[i].state+" "+"</td>"
+  			tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>"
+  			tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>"
+  			}
+  			pro.innerHTML=tabla;
+  		}
+  		drawSenateTable(arreglo);
     </script>
 
 </html>
