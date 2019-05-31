@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
       <meta charset="utf-8">
-      <title>Senate Data</title>
+      <title>House Data</title>
       <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Establece que sea adaptativo, y la escala inicial del zoom -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- Latest compiled and minified CSS -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> <!-- Librería JQuery -->
@@ -41,13 +41,13 @@
                 <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#">Senate</a></li> <!-- no enlaza a la propia página -->
-                      <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                      <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="#">House</a></li> <!-- link a House-->
                     </ul>
                 </li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
+                <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
               </ul>
             </div>
           </div>
@@ -55,11 +55,12 @@
 
         <div class="container"> <!-- container, para que también sea adaptativa -->
 
-          <h2>Senators</h2> <!-- el subtítulo y texto están en el mismo div que la tabla -->
-          <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+            <h2>Congressmen</h2> <!-- el subtítulo y texto están en el mismo div que la tabla -->
+            <p>The major power of the House is to pass federal legislation that affects the entire country, although its bills must also be passed by the Senate and further agreed to by the U.S. President before becoming law (unless both the House and Senate re-pass the legislation with a two-thirds majority in each chamber). The House has some exclusive powers: the power to initiate revenue bills, to impeach officials (impeached officials are subsequently tried in the Senate), and to elect the U.S. President in case there is no majority in the Electoral College.</p>
+            <p>Each U.S. state is represented in the House in proportion to its population as measured in the census, but every state is entitled to at least one representative. </p>
 
           <div class="table-responsive"> <!-- la tabla es adaptativa; las otras características disponibles alteraban la maquetación en una forma que no prefierí -->
-          <table class="table" id="senate-data"></table>
+          <table class="table" id="house-data"></table>
 
           </div>
         </div>
@@ -71,13 +72,13 @@
         </footer>
     </body>
 <!-- Script que conecta con el JSON devenido en JS -->
-  	<script src="pro-congress-113-senate.js"></script>
+  	<script src="pro-congress-113-house.js"></script>
   	<script type="text/javascript">
 
   		var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
 
-  		let drawSenateTable = (arreglo) => {
-  			var pro=document.getElementById("senate-data"); // variable pro se comunica con la tabla del body
+  		let drawHouseTable = (arreglo) => {
+  			var pro=document.getElementById("house-data"); // variable pro se comunica con la tabla del body
         // crea los encabezados de columna
   			var tabla="<thead class='thead-dark'><tr><th>Full Name</th><th>Party</th><th>State</th><th>Seniority</th><th>Percentage of votes</th></tr></thead>";
   			for (let i=0;i<arreglo.length;i++) // recorre el array 
@@ -98,7 +99,7 @@
   			}
   			pro.innerHTML=tabla; // Le asigna a la variable pro el HTML generado en tabla 
   		}
-  		drawSenateTable(arreglo); // Llama a la función
+  		drawHouseTable(arreglo); // Llama a la función
     </script>
 
 </html>
