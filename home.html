@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <link rel="shortcut icon" href="images/favicon.ico"> <!-- favicon del sitio -->
+      <title>Home</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Establece que sea adaptativo, y la escala inicial del zoom -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- Latest compiled and minified CSS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> <!-- Librería JQuery -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> <!-- Latest compiled JavaScript -->
+
+      <style>
+    /* Quito los márgenes y bordes predeterminados por bootstrap para navbar */
+        .navbar {
+          margin-bottom: 0;
+          border-radius: 0;
+        }
+
+    /* Le agrego un fondo gris claro y algo de margen al footer   */
+        footer {
+          background-color: #EFEFEF;
+          padding: 25px;
+          margin-top: 170px;  /* ajuste de margen para que el footer quede en su lugar cuando el contenido es corto */
+        }
+
+    /* Logo a la izquierda, y tamaño */
+        .logo {
+          float: left;
+          width: 20px;
+          height: auto;
+        }
+
+    /* Padding al título de sitio para que no se pegue al logo */
+        .TGIF {
+          padding-left: 30px;
+        }
+
+    /* Mejora la ubicación de la imagen del Home, en todas las pantallas */
+        .imgHome {
+          padding: 80px 150px 0px 150px;
+        }
+
+    /* Separa el cuerpo del accordion de la navbar */
+        .mainContent {
+          margin-top: 80px;
+        }
+      </style>
+    </head>
+
+    <body>
+      <!-- Mi barra de navegación incluye el título del sitio -->
+          <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
+            <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <!-- navbar colapsable, para que no ocupe tanto espacio al adaptarse a pantallas más chicas; esconde el menú en el botón -->
+                 <span class="icon-bar"></span> <!-- cada una de las líneas que conforman el 'ícono' de este menú -->
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img class="logo" src="images/logo-mod2.png" alt="logo TGIF">
+                  <div class="TGIF">TGIF</div> <!-- el título del sitio incorporado a navbar -->
+                </a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar"> <!-- el div al que apunta el botón con el que se colapsa -->
+                <ul class="nav navbar-nav">
+                  <li><a href="#">Home</a></li> <!-- link al Home -->
+                  <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                        <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                      </ul>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+          <!--Accordion container-->
+          <div class="container mainContent">
+            <div class="row"> <!-- Divido la pantalla en dos columnas, entre el accordion y la imagen -->
+              <div class="col-sm-8"> <!-- Establece un ancho de 8/12 de la pantalla -->
+                <div class="panel-group" id="accordion">
+                  <div class="panel panel-default" style="background-color: #F9F9F9"> <!-- Cambio color fondo texto -->
+                    <div class="panel-heading" style="background-color: #57F"> <!-- Cambio color fondo título accordion -->
+                      <h2 class="panel-title" style="font-weight: 600"> <!-- Cambio peso de la typo -->
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">About Us</a>
+                      </h2>
+                    </div> <!-- Cierra primer .panel-heading -->
+                    <div id="collapse1" class="panel-collapse collapse in">
+                      <div class="panel-body">
+                        Openness, accountability, and honesty define government transparency. In a free society, transparency is government's obligation to share information with citizens. It is at the heart of how citizens hold their public officials accountable. Here at TGIF we believe that government should be transparent.<br><br>
+                        Governments exist to serve the people. Information on how officials conduct the public business and spend taxpayer money must be readily available and easily understood. This transparency allows good and just governance.  Transparency promotes accountability and provides information for citizens about what their Government is doing.<br><br>
+                        We also believe that government should be participatory. Public engagement enhances the Government's effectiveness and improves the quality of its decisions. Knowledge is widely dispersed in society, and public officials benefit from having access to that dispersed knowledge. We invite you to use our site to become actively engaged in American government.<br><br>
+                        TGIF works to disclose information in forms that the public can readily find and use. We solicit public feedback to identify information of greatest use to the public.
+                      </div> <!-- Cierra primer .panel-body -->
+                    </div> <!-- Cierra .collapse1 -->
+                  </div> <!-- Cierra primer .panel-default -->
+                  <div class="panel panel-default" style="background-color: #F9F9F9">
+                    <div class="panel-heading" style="background-color: #57F">
+                      <h2 class="panel-title" style="font-weight: 600">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Background History of Government Transparency</a>
+                      </h2>
+                    </div> <!-- Cierra segundo .panel-heading -->
+                    <div id="collapse2" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <!-- Separé párrafos con doble 'br' -->
+                        In the West, the idea that government should be open to public scrutiny and susceptible to public opinion dates back at least to the time of the Enlightenment, when many philosophes made an attack on absolutist doctrine of state secrecy, a core part of their intellectual project. The passage of formal legislative instruments to this end can also be traced to this time with Sweden, for example, (which then included Finland as a Swedish-governed territory) enacting free press legislation as part of its constitution (Freedom of the Press Act, 1766). This approach, and that of the philosophes more broadly, is strongly related to recent historiography on the eighteenth-century public sphere.<br><br>
+
+                      	Influenced by Enlightenment thought, the revolutions in America (1776) and France (1789), freedom of the press enshrined provisions and requirements for public budgetary accounting and freedom of the press in constitutional articles. In the nineteenth century, attempts by Metternichean statesmen to row back on these measures were vigorously opposed by a number of eminent liberal politicians and writers, Bentham, Mill and Acton prominent among the latter.<br><br>
+
+                      	Open government is widely seen to be a key hallmark of contemporary democratic practice and is often linked to the passing of freedom of information legislation. Scandinavian countries claim to have adopted the first freedom of information legislation, dating the origins of its modern provisions to the eighteenth century and Finland continuing the presumption of openness after gaining independence in 1917, passing its Act on Publicity of Official Documents in 1951 (superseded by new legislation in 1999).<br><br>
+
+                      	The United States passed its Freedom of Information Act (FOIA) in 1966, FOIAs, Access to Information Acts (AIAs) or equivalent laws were passed in Denmark and Norway in 1970.
+                      </div> <!-- Cierra segundo .panel-body -->
+                    </div> <!-- Cierra .collapse2 -->
+                  </div> <!-- Cierra segundo .panel-default -->
+                </div> <!-- Cierra .panel-group -->
+              </div> <!-- Cierra div de columna 8/12, p/accordion -->
+              <div class="img-responsive col-sm-4 imgHome"><img width=250px src="images/imgHome-mod.png"></div> <!-- Img Home -->
+            </div> <!-- Cierra .row -->
+          </div> <!-- Cierra contenedor general -->
+
+      <!-- Footer de página -->
+          <footer class="page-footer">
+            <div class="container-fluid text-center">
+              <p>&copy; 2016 TGIF | All Rights Reserved</p>
+            </div>
+          </footer>
+</body>
+</html>
