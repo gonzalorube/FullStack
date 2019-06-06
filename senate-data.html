@@ -77,129 +77,220 @@
 
           <h2>Senators</h2> <!-- el subtítulo y texto están en el mismo div que la tabla -->
           <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-          
+
           <!-- la tabla es adaptativa; las otras características disponibles alteraban la maquetación en una forma que no preferí -->
-          <div class="table-responsive"> 
-          <div>
-            <form>
-              <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="republicano-checkbox" checked>Republican
-              <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="democrata-checkbox" checked>Democrat
-              <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="independiente-checkbox" checked>Independent
-            </form>
-          </div>
-        
-          <table class="table" id="senate-data">
+          <div class="table-responsive">
+            <div>
+              <form name="filter" id="FilterForm" action="" method="">
+                <select id="state-filter" class="filter" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox(getSelectedState()))">
 
-          <!-- Script que conecta con el JSON devenido en JS -->
-          <script src="pro-congress-113-senate.js"></script>
-        
-          <script type="text/javascript">
+                </select>
+              </form>
+            <!--  let tn = document.getElementById('tn-option');
+              let wi = document.getElementById('wi-option');
+              let wy = document.getElementById('wy-option'); -->
+            </div>
+            <div>
+              <form>
+                <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="republicano-checkbox" checked>Republican
+                <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="democrata-checkbox" checked>Democrat
+                <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="independiente-checkbox" checked>Independent
+              </form>
+            </div>
 
-          let arrayAux = [];
-          var str = JSON.stringify(data, null, 2);
-          var valor = JSON.parse(str);
-          var pro = document.getElementById("senate-data");
-          var tbody= document.createElement("tbody");
+            <table class="table" id="senate-data">
 
-          var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
+            <!-- Script que conecta con el JSON devenido en JS -->
+            <script src="pro-congress-113-senate.js"></script>
 
-          let drawSenateTable = (arreglo) => {
-            var pro=document.getElementById("senate-data"); // variable pro se comunica con la tabla del body
-            // crea los encabezados de columna
-            var tabla="<thead class='thead-dark'><tr><th>Full Name</th><th>Party</th><th>State</th><th>Seniority</th><th>Percentage of votes</th></tr></thead>";
-            for (let i=0;i<arreglo.length;i++) // recorre el array
-            {
-            tabla +="<tr>"; // agrega una fila por cada índice
-            if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null) // Si nombre, segundo nombre y apellido no están vacíos, agrega la celda y solicita sus contenidos
-            {
-            tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
+            <script type="text/javascript">
+
+/*            let drawSenateTable = (arreglo) => {
+              var pro=document.getElementById("senate-data"); // variable pro se comunica con la tabla del body
+              // crea los encabezados de columna
+              var tabla="<thead class='thead-dark'><tr><th>Full Name</th><th>Party</th><th>State</th><th>Seniority</th><th>Percentage of votes</th></tr></thead>";
+              for (let i=0;i<arreglo.length;i++) // recorre el array
+              {
+              tabla +="<tr>"; // agrega una fila por cada índice
+              if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null) // Si nombre, segundo nombre y apellido no están vacíos, agrega la celda y solicita sus contenidos
+              {
+              tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
+              }
+              else if(arreglo[i].middle_name==null) // Si el segundo nombre no existe, agrega sólo el primero y el apellido
+              {
+                tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
+              }
+              tabla+="<td>"+" "+arreglo[i].party+" "+"</td>"; // Continúa agregando las celdas para el Partido, el Estado, etc.
+              tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
+              tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
+              tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
+              }
+              pro.innerHTML=tabla; // Le asigna a la variable pro el HTML generado en tabla
             }
-            else if(arreglo[i].middle_name==null) // Si el segundo nombre no existe, agrega sólo el primero y el apellido
-            {
-              tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
+            drawSenateTable(arreglo); // Llama a la función
+*/
+            /*function filtrarTablaEstado () {
+              arrayAux2=[];
             }
-            tabla+="<td>"+" "+arreglo[i].party+" "+"</td>"; // Continúa agregando las celdas para el Partido, el Estado, etc.
-            tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
-            tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
-            tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
-            }
-            pro.innerHTML=tabla; // Le asigna a la variable pro el HTML generado en tabla
-          }
-          drawSenateTable(arreglo); // Llama a la función
-          
-          function dibujarTablaRepresentantes (members) {
-              var tabla="<thead class='thead-dark'><tr>" +
-                      "<th>Full Name</th>" +
-                      "<th>Party</th>" +
-                      "<th>State</th>" +
-                      "<th>Senority</th>" +
-                      "<th>Percentage of votes</th>" +
-                      "</tr>" +
-                      "</thead>";
-              for (let i=0;i<members.length;i++) {
-                
-                tabla +="<tr>";
+              filtrarTablaCheckbox(arrayAux);
+              return filtrarMiembrosPorEstado(arrayAux2);
+            }*/
 
-                if(members[i].last_name!=null && members[i].first_name!=null && members[i].middle_name!=null)
-                {
-                  tabla+="<td><a href='"+members[i].url+"'>"+members[i].last_name+" "+members[i].first_name+" "+members[i].middle_name+"</a></td>";
-                }
-                else if(members[i].middle_name==null)
-                {
-                  tabla+="<td><a href='"+members[i].url+"'>"+members[i].last_name+" "+members[i].first_name+" "+"..."+"</a></td>";
-                }
-                tabla+="<td>"+" "+members[i].party+" "+"</td>";
-                tabla+="<td>"+" "+members[i].state+" "+"</td>";
-                tabla+="<td>"+" "+members[i].seniority+" "+"</td>";
-                tabla+="<td>"+" "+members[i].votes_with_party_pct+"%"+" "+"</td></tr>";
-              }
-              pro.innerHTML=tabla;
-          }
-
-          function filtrarTablaCheckbox () {
-              arrayAux=[];
-              let checkboxDemocrata = document.getElementById('democrata-checkbox');
-              let checkboxIndependiente = document.getElementById('independiente-checkbox');
-              let checkboxRepublicanos = document.getElementById('republicano-checkbox');
-              console.log("Democrata: " + checkboxDemocrata.checked);
-              console.log("Independiente: " + checkboxIndependiente.checked);
-              console.log("Republicanos: " + checkboxRepublicanos.checked);
-              if(checkboxDemocrata.checked) {
-                arrayAux.push('D');
-              }
-              if(checkboxIndependiente.checked) {
-                arrayAux.push('I');
-              }
-              if(checkboxRepublicanos.checked) {
-                arrayAux.push('R');
-              }
-              return filtrarMiembrosPorPartido(arrayAux);
-          }
-
-          function filtrarMiembrosPorPartido(arrayAux) {
-              let arregloFiltrado = [];
+        /*    function filtrarMiembrosPorEstado(arrayAux2) {
+              let arregloFiltradoEstado = [];
               for(let i = 0; i<arreglo.length; i++) {
-                let elemento = arreglo[i];
-                if(comprobarSiEstaAdentro(elemento)){
-                  arregloFiltrado.push(elemento);
+                let elemento2 = arreglo[i];
+                if(comprobarPresenciaEstado(elemento2)){
+                  arregloFiltradoEstado.push(elemento2);
                 }
               }
-              return arregloFiltrado;
-          }
-            
-          function comprobarSiEstaAdentro(elemento) {
-              for(let i = 0; i < arrayAux.length; i++) {
-                if(arrayAux[i] == elemento.party) {
-                  return true;
+              console.log(arregloFiltradoEstado);
+              return arregloFiltradoEstado;
+            }*/
+
+        /*    function comprobarPresenciaEstado(elemento2) {
+                for(let i = 0; i < arrayAux2.length; i++) {
+                  if(arrayAux2[i] == elemento2.state) {
+                    if(comprobarSiEstaAdentro(elemento2)){
+                      return true;
+                    }
+                  }
                 }
+                return false;
+            }*/
+
+            let arrayAux = [];
+            var str = JSON.stringify(data, null, 2);
+            var valor = JSON.parse(str);
+            var pro = document.getElementById("senate-data");
+            var tbody= document.createElement("tbody");
+
+            var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
+
+            function dibujarTablaRepresentantes (arreglo) {
+                var tabla="<thead class='thead-dark'><tr>" +
+                        "<th>Full Name</th>" +
+                        "<th>Party</th>" +
+                        "<th>State</th>" +
+                        "<th>Senority</th>" +
+                        "<th>Percentage of votes</th>" +
+                        "</tr>" +
+                        "</thead>";
+                for (let i=0;i<arreglo.length;i++) {
+
+                  tabla +="<tr>";
+
+                  if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
+                  {
+                    tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
+                  }
+                  else if(arreglo[i].middle_name==null)
+                  {
+                    tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
+                  }
+                  tabla+="<td>"+" "+arreglo[i].party+" "+"</td>";
+                  tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
+                  tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
+                  tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
+                }
+                pro.innerHTML=tabla;
+            }
+
+            function onlyUnique(value, index, self) {
+                return self.indexOf(value) === index;
+            }
+
+            function getStates(arreglo){
+              var states=[];
+              for(var i=0;i<arreglo.length;i++){
+                states.push(arreglo[i].state);
               }
-              return false;
-          }
-            var arreglo = valor.results[0].members;
-            dibujarTablaRepresentantes(arreglo);
-          </script>
-        
-        </table>
+              return states;
+            }
+            var states = getStates(arreglo).filter(onlyUnique);
+
+            var option = document.createElement("option");
+            var node = document.createTextNode("All");
+            option.appendChild(node);
+
+            var element = document.getElementById("state-filter");
+            element.appendChild(option);
+
+            for(var i=0;i<states.length;i++){
+              var option = document.createElement("option");
+              var node = document.createTextNode(states[i]);
+              option.appendChild(node);
+
+              var element = document.getElementById("state-filter");
+              element.appendChild(option);
+            }
+
+            function getSelectedState(){
+              $(document).ready(function(){
+                $("select.filter").change(function(){
+                  var selectedFilter = $(this).children("option:selected").val();
+                });
+              });
+              filtrarTablaCheckbox();
+              }
+
+            function getStateValue(){
+            var selectedState = getSelectedState();
+            console.log("seleccionaste " + selectedState);
+            return selectedState;
+            }
+
+            function filtrarTablaCheckbox () {
+              arrayAux = [];
+                let checkboxDemocrata = document.getElementById('democrata-checkbox');
+                let checkboxIndependiente = document.getElementById('independiente-checkbox');
+                let checkboxRepublicanos = document.getElementById('republicano-checkbox');
+                console.log("Democrata: " + checkboxDemocrata.checked);
+                console.log("Independiente: " + checkboxIndependiente.checked);
+                console.log("Republicanos: " + checkboxRepublicanos.checked);
+                if(checkboxDemocrata.checked) {
+                  arrayAux.push('D');
+                }
+                if(checkboxIndependiente.checked) {
+                  arrayAux.push('I');
+                }
+                if(checkboxRepublicanos.checked) {
+                    arrayAux.push('R');
+                }
+                return filtrarMiembrosPorPartido(arrayAux);
+            }
+
+            function filtrarMiembrosPorPartido(arrayAux) {
+                let arregloFiltrado = [];
+                for(let i = 0; i<arreglo.length; i++) {
+                  let elemento = arreglo[i];
+                  if(comprobarSiEstaAdentro(elemento)){
+                    arregloFiltrado.push(elemento);
+                  }
+                }
+                return arregloFiltrado;
+            }
+
+            function comprobarSiEstaAdentro(elemento) {
+                for(let i = 0; i < arrayAux.length; i++) {
+                  if(arrayAux[i] == elemento.party) {
+                    if(getStateValue() == "All"){
+                      return true;
+                    } else if(getStateValue() == elemento.state){
+                      return true;
+                    }
+                  }
+                }
+                return false;
+            }
+
+
+              var arreglo = valor.results[0].members;
+              dibujarTablaRepresentantes(arreglo);
+            </script>
+
+
+          </table>
         </div>
         </div>
 
