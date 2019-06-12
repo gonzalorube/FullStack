@@ -20,7 +20,7 @@
         footer {
           background-color: #f2f2f2;
           padding: 25px;
-          margin-top: 300px;
+          margin-top: 320px;
         }
 
     /* Logo a la izquierda, y tamaño */
@@ -37,6 +37,10 @@
 
         .textTable {
           margin-top: 55px;
+        }
+
+        #FilterForm {
+          float: right;
         }
       </style>
     </head>
@@ -81,13 +85,18 @@
           <!-- la tabla es adaptativa; las otras características disponibles alteraban la maquetación en una forma que no preferí -->
           <div class="table-responsive">
             <div>
+              <!-- Filtro de Estados -->
               <form name="filter" id="FilterForm" action="" method="">
+                <label for="state-filter">Filter by State:
+                <!-- Ante un cambio en la selección, se dispara el mismo método que en filtro de Partido -->
                 <select id="state-filter" class="filter" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())"></select>
               </form>
 
             </div>
             <div>
+              <!-- Filtro de Partidos -->
               <form>
+                <label for="checkbox">Filter by Party:
                 <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="republicano-checkbox" checked>Republican
                 <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="democrata-checkbox" checked>Democrat
                 <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="independiente-checkbox" checked>Independent
@@ -96,138 +105,139 @@
 
             <table class="table" id="senate-data">
 
-            <!-- Script que conecta con el JSON devenido en JS -->
-            <script src="pro-congress-113-senate.js"></script>
+              <!-- Script que conecta con el JSON devenido en JS -->
+              <script src="pro-congress-113-senate.js"></script>
 
-            <script type="text/javascript">
+              <script type="text/javascript">
 
-            let arrayAux = [];
-            var str = JSON.stringify(data, null, 2);
-            var valor = JSON.parse(str);
-            var pro = document.getElementById("senate-data");
-            var tbody= document.createElement("tbody");
-            var selectedStates = {};
+              let arrayAux = []; // array auxiliar, para trabajar con los filtros
+              var str = JSON.stringify(data, null, 2);
+              var valor = JSON.parse(str); // pasamos el JSON a string
+              var pro = document.getElementById("senate-data"); // variable pro es la tabla, y va a recibir sus elementos en dibujarTablaRepresentantes()
+              var tbody= document.createElement("tbody");
+              var selectedStates = {}; // objeto para guardar el Estado seleccionado por el usuario
 
-            var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
-            $("select.filter").change(getSelectedState);
+              var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
+              $("select.filter").change(getSelectedState);
 
-            function dibujarTablaRepresentantes (arreglo) {
-                var tabla="<thead class='thead-dark'><tr>" +
-                        "<th>Full Name</th>" +
-                        "<th>Party</th>" +
-                        "<th>State</th>" +
-                        "<th>Senority</th>" +
-                        "<th>Percentage of votes</th>" +
-                        "</tr>" +
-                        "</thead>";
-                for (let i=0;i<arreglo.length;i++) {
-
-                  tabla +="<tr>";
-
-                  if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
-                  {
-                    tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
+              function dibujarTablaRepresentantes (arreglo) {
+                // Creamos la estructura y los encabezados de tabla; los almacenamos como String concatenado en una variable
+                  var tabla="<thead class='thead-dark'><tr>" +
+                          "<th>Full Name</th>" +
+                          "<th>Party</th>" +
+                          "<th>State</th>" +
+                          "<th>Senority</th>" +
+                          "<th>Percentage of votes</th>" +
+                          "</tr>" +
+                          "</thead>";
+                  for (let i=0;i<arreglo.length;i++) {
+                    // A cada iteración, agrega una fila
+                    tabla +="<tr>";
+                    // Si todos los campos de nombre están completos, agrega celdas para sendos campos.
+                    if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
+                    {
+                      tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
+                    } // Si falta el segundo nombre, agrega sólo los otros dos campos
+                    else if(arreglo[i].middle_name==null)
+                    {
+                      tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
+                    } // A continuación, incorpora las celdas de los otros campos solicitados
+                    tabla+="<td>"+" "+arreglo[i].party+" "+"</td>";
+                    tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
+                    tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
+                    tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
                   }
-                  else if(arreglo[i].middle_name==null)
-                  {
-                    tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
-                  }
-                  tabla+="<td>"+" "+arreglo[i].party+" "+"</td>";
-                  tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
-                  tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
-                  tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
-                }
-                pro.innerHTML=tabla;
-            }
-
-            function onlyUnique(value, index, self) {
-                return self.indexOf(value) === index;
-            }
-
-            function getStates(arreglo){
-              var states=[];
-              for(var i=0;i<arreglo.length;i++){
-                states.push(arreglo[i].state);
+                  pro.innerHTML=tabla; // Asigna el String tabla a la variable pro definida arriba, vinculada al elemento table
               }
-              return states;
-            }
-            var states = getStates(arreglo).filter(onlyUnique);
-
-            function cargarOpcionesSelect() {
-              var option = document.createElement("option");
-              option.setAttribute("NAME", "state");
-              option.setAttribute("VALUE", "All");
-              option.setAttribute("VALUE", "All");
-              var node = document.createTextNode("All");
-              option.appendChild(node);
-              var element = document.getElementById("state-filter");
-              element.appendChild(option);
-              for(var i=0;i<states.length;i++){
+              // onlyUnique elimina valores repetidos
+              function onlyUnique(value, index, self) {
+                  return self.indexOf(value) === index;
+              }
+              // getStates recibe todos los Estados existentes, aunque estén repetidos
+              function getStates(arreglo){
+                var states=[];
+                for(var i=0;i<arreglo.length;i++){
+                  states.push(arreglo[i].state);
+                }
+                return states;
+              } // A continuación, se filtran los Estados repetidos
+              var states = getStates(arreglo).filter(onlyUnique);
+              // Siguiente función crea los elementos option para cada Estado seleccionable en el filtro
+              function cargarOpcionesSelect() {
                 var option = document.createElement("option");
-                option.setAttribute("VALUE", states[i]);  
-                var node = document.createTextNode(states[i]);
+                option.setAttribute("NAME", "state");
+                option.setAttribute("VALUE", "All");
+                option.setAttribute("VALUE", "All");
+                var node = document.createTextNode("All");
                 option.appendChild(node);
-
                 var element = document.getElementById("state-filter");
                 element.appendChild(option);
+                for(var i=0;i<states.length;i++){
+                  var option = document.createElement("option");
+                  option.setAttribute("VALUE", states[i]);
+                  var node = document.createTextNode(states[i]);
+                  option.appendChild(node);
+
+                  var element = document.getElementById("state-filter");
+                  element.appendChild(option);
+                }
               }
-            }
-
-            function getSelectedState(){
-              var selectedFilter = document.getElementById('state-filter').selectedOptions[0].text;
-              return selectedFilter;
-            }
-            window.onload = () => {
-              cargarOpcionesSelect();
-              getSelectedState();
-              selectedStates = getSelectedState();
-            }
-
-            function filtrarTablaCheckbox () {
-              arrayAux = [];              
-                let checkboxDemocrata = document.getElementById('democrata-checkbox');
-                let checkboxIndependiente = document.getElementById('independiente-checkbox');
-                let checkboxRepublicanos = document.getElementById('republicano-checkbox');
-                if(checkboxDemocrata.checked) {
-                  arrayAux.push('D');
-                }
-                if(checkboxIndependiente.checked) {
-                  arrayAux.push('I');
-                }
-                if(checkboxRepublicanos.checked) {
-                    arrayAux.push('R');
-                }
-     
-                return filtrarMiembrosPorPartido(arrayAux);
-            }
-
-            function filtrarMiembrosPorPartido(arrayAux) {
-                let arregloFiltrado = [];
-                for(let i = 0; i<arreglo.length; i++) {
-                  let elemento = arreglo[i];
-                  if(dobleValidacion(elemento)){
-                    arregloFiltrado.push(elemento);
+              // getSelectedState recibe la info de qué Estado seleccionó el usuario y devuelve su valor
+              function getSelectedState(){
+                var selectedFilter = document.getElementById('state-filter').selectedOptions[0].text;
+                return selectedFilter;
+              }
+              window.onload = () => { // Inicia métodos al cargar la página y asigna el Estado seleccionado a la variable selectedStates
+                cargarOpcionesSelect();
+                getSelectedState();
+                selectedStates = getSelectedState();
+              }
+              // Próximo método filtra partidos según indique el usuario en los checkbox
+              function filtrarTablaCheckbox () {
+                arrayAux = [];
+                  let checkboxDemocrata = document.getElementById('democrata-checkbox');
+                  let checkboxIndependiente = document.getElementById('independiente-checkbox');
+                  let checkboxRepublicanos = document.getElementById('republicano-checkbox');
+                  if(checkboxDemocrata.checked) {
+                    arrayAux.push('D');
                   }
-                }
-                return arregloFiltrado;
-            }
+                  if(checkboxIndependiente.checked) {
+                    arrayAux.push('I');
+                  }
+                  if(checkboxRepublicanos.checked) {
+                      arrayAux.push('R');
+                  }
 
-            function dobleValidacion(elemento) {
-                for(let i = 0; i < arrayAux.length; i++) {
-                  if(arrayAux[i] == elemento.party) {
-                    if(getSelectedState() == "All" || getSelectedState() == elemento.state) {
-                      return true;
+                  return filtrarMiembrosPorPartido(arrayAux);
+              }
+              // Filtro subyacente crea un array de miembros coincidentes con filtro anterior, para ofrecerlo a método anterior, que lo imprime
+              function filtrarMiembrosPorPartido(arrayAux) {
+                  let arregloFiltrado = [];
+                  for(let i = 0; i<arreglo.length; i++) {
+                    let elemento = arreglo[i];
+                    if(dobleValidacion(elemento)){
+                      arregloFiltrado.push(elemento);
                     }
                   }
-                }
-                return false;
-            }
+                  return arregloFiltrado;
+              }
+              // La doble validación se ocupa de autorizar que se agreguen los miembros al array anterior, ssi cumplen con los filtros seleccionados de Partido y de Estado
+              function dobleValidacion(elemento) {
+                  for(let i = 0; i < arrayAux.length; i++) {
+                    if(arrayAux[i] == elemento.party) {
+                      if(getSelectedState() == "All" || getSelectedState() == elemento.state) {
+                        return true;
+                      }
+                    }
+                  }
+                  return false;
+              }
 
-              var arreglo = valor.results[0].members;
-              dibujarTablaRepresentantes(arreglo);
-            </script>
-          </table>
-        </div>
+                var arreglo = valor.results[0].members;
+                dibujarTablaRepresentantes(arreglo);
+              </script>
+            </table>
+          </div>
         </div>
 
       <!-- Footer, con estilo de footer y texto centrado, ajustado también con CSS en el head -->
