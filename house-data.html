@@ -47,35 +47,49 @@
 
     <body>
     <!-- Mi barra de navegación incluye el título del sitio -->
-        <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
-          <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <!-- navbar colapsable, para que no ocupe tanto espacio al adaptarse a pantallas más chicas; esconde el menú en el botón -->
-               <span class="icon-bar"></span> <!-- cada una de las líneas que conforman el 'ícono' de este menú -->
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#"><img class="logo" src="images/logo-mod2.png" alt="logo TGIF">
-                <div class="TGIF">TGIF</div> <!-- el título del sitio incorporado a navbar -->
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar"> <!-- el div al que apunta el botón con el que se colapsa -->
-              <ul class="nav navbar-nav">
-                <li><a href="home.html">Home</a></li> <!-- link al Home -->
-                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
-                      <li><a href="#">House</a></li> <!-- link a House-->
-                    </ul>
-                </li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
+      <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <!-- navbar colapsable, para que no ocupe tanto espacio al adaptarse a pantallas más chicas; esconde el menú en el botón -->
+           <span class="icon-bar"></span> <!-- cada una de las líneas que conforman el 'ícono' de este menú -->
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img class="logo" src="images/logo-mod2.png" alt="logo TGIF">
+            <div class="TGIF">TGIF</div> <!-- el título del sitio incorporado a navbar -->
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar"> <!-- el div al que apunta el botón con el que se colapsa -->
+          <ul class="nav navbar-nav">
+            <li><a href="home.html">Home</a></li> <!-- link al Home -->
+            <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                  <li><a href="#">House</a></li> <!-- link a House-->
+                </ul>
+            </li>
+            <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Attendance <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="senate-attendance.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                  <li><a href="house-attendance.html">House</a></li> <!-- link a House-->
+                </ul>
+            </li>
+            <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                  <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
         <div class="container textTable"> <!-- container, para que también sea adaptativa -->
 
@@ -103,138 +117,7 @@
               </form>
             </div>
 
-            <table class="table" id="house-data">
-
-              <!-- Script que conecta con el JSON devenido en JS -->
-              <script src="pro-congress-113-house.js"></script>
-
-              <script type="text/javascript">
-                // Funcionamiento comentado en 'senate-data.html'
-                let arrayAux = [];
-                var str = JSON.stringify(data, null, 2);
-                var valor = JSON.parse(str);
-                var pro = document.getElementById("house-data");
-                var tbody= document.createElement("tbody");
-                var selectedStates = {};
-
-                var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
-                $("select.filter").change(getSelectedState);
-
-                function dibujarTablaRepresentantes (arreglo) {
-                    var tabla="<thead class='thead-dark'><tr>" +
-                            "<th>Full Name</th>" +
-                            "<th>Party</th>" +
-                            "<th>State</th>" +
-                            "<th>Senority</th>" +
-                            "<th>Percentage of votes</th>" +
-                            "</tr>" +
-                            "</thead>";
-                    for (let i=0;i<arreglo.length;i++) {
-
-                      tabla +="<tr>";
-
-                      if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
-                      {
-                        tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
-                      }
-                      else if(arreglo[i].middle_name==null)
-                      {
-                        tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
-                      }
-                      tabla+="<td>"+" "+arreglo[i].party+" "+"</td>";
-                      tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
-                      tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
-                      tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
-                    }
-                    pro.innerHTML=tabla;
-                }
-
-                function onlyUnique(value, index, self) {
-                    return self.indexOf(value) === index;
-                }
-
-                function getStates(arreglo){
-                  var states=[];
-                  for(var i=0;i<arreglo.length;i++){
-                    states.push(arreglo[i].state);
-                  }
-                  return states;
-                }
-                var states = getStates(arreglo).filter(onlyUnique);
-
-                function cargarOpcionesSelect() {
-                  var option = document.createElement("option");
-                  option.setAttribute("NAME", "state");
-                  option.setAttribute("VALUE", "All");
-                  var node = document.createTextNode("All");
-                  option.appendChild(node);
-                  var element = document.getElementById("state-filter-h");
-                  element.appendChild(option);
-                  for(var i=0;i<states.length;i++){
-                    var option = document.createElement("option");
-                    option.setAttribute("VALUE", states[i]);
-                    var node = document.createTextNode(states[i]);
-                    option.appendChild(node);
-
-                    var element = document.getElementById("state-filter-h");
-                    element.appendChild(option);
-                  }
-                }
-
-                function getSelectedState(){
-                  var selectedFilter = document.getElementById('state-filter-h').selectedOptions[0].text;
-                  return selectedFilter;
-                }
-                window.onload = () => {
-                  cargarOpcionesSelect();
-                  getSelectedState();
-                  selectedStates = getSelectedState();
-                }
-
-                function filtrarTablaCheckbox () {
-                  arrayAux = [];
-                    let checkboxDemocrata = document.getElementById('democrata-checkbox-h');
-                    let checkboxIndependiente = document.getElementById('independiente-checkbox-h');
-                    let checkboxRepublicanos = document.getElementById('republicano-checkbox-h');
-                    if(checkboxDemocrata.checked) {
-                      arrayAux.push('D');
-                    }
-                    if(checkboxIndependiente.checked) {
-                      arrayAux.push('I');
-                    }
-                    if(checkboxRepublicanos.checked) {
-                        arrayAux.push('R');
-                    }
-
-                    return filtrarMiembrosPorPartido(arrayAux);
-                }
-
-                function filtrarMiembrosPorPartido(arrayAux) {
-                    let arregloFiltrado = [];
-                    for(let i = 0; i<arreglo.length; i++) {
-                      let elemento = arreglo[i];
-                      if(dobleValidacion(elemento)){
-                        arregloFiltrado.push(elemento);
-                      }
-                    }
-                    return arregloFiltrado;
-                }
-
-                function dobleValidacion(elemento) {
-                    for(let i = 0; i < arrayAux.length; i++) {
-                      if(arrayAux[i] == elemento.party) {
-                        if(getSelectedState() == "All" || getSelectedState() == elemento.state) {
-                          return true;
-                        }
-                      }
-                    }
-                    return false;
-                }
-
-                  var arreglo = valor.results[0].members;
-                  dibujarTablaRepresentantes(arreglo);
-              </script>
-            </table>
+            <table class="table" id="house-data"></table>
           </div>
         </div>
       <!-- Footer, con estilo de footer y texto centrado, ajustado también con CSS en el head -->
@@ -243,5 +126,134 @@
             <p>&copy; 2016 TGIF | All Rights Reserved</p>
           </div>
         </footer>
+        <!-- Script que conecta con el JSON devenido en JS -->
+        <script src="pro-congress-113-house.js"></script>
+
+        <script type="text/javascript">
+          // Funcionamiento comentado en 'senate-data.html'
+          let arrayAux = [];
+          var str = JSON.stringify(data, null, 2);
+          var valor = JSON.parse(str);
+          var pro = document.getElementById("house-data");
+          var tbody= document.createElement("tbody");
+          var selectedStates = {};
+
+          var arreglo=data.results[0].members; // asigna los miembros del Senado a un array
+          $("select.filter").change(getSelectedState);
+
+          function dibujarTablaRepresentantes (arreglo) {
+              var tabla="<thead class='thead-dark'><tr>" +
+                      "<th>Full Name</th>" +
+                      "<th>Party</th>" +
+                      "<th>State</th>" +
+                      "<th>Senority</th>" +
+                      "<th>Percentage of votes</th>" +
+                      "</tr>" +
+                      "</thead>";
+              for (let i=0;i<arreglo.length;i++) {
+
+                tabla +="<tr>";
+
+                if(arreglo[i].last_name!=null && arreglo[i].first_name!=null && arreglo[i].middle_name!=null)
+                {
+                  tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+arreglo[i].middle_name+"</a></td>";
+                }
+                else if(arreglo[i].middle_name==null)
+                {
+                  tabla+="<td><a href='"+arreglo[i].url+"'>"+arreglo[i].last_name+" "+arreglo[i].first_name+" "+"..."+"</a></td>";
+                }
+                tabla+="<td>"+" "+arreglo[i].party+" "+"</td>";
+                tabla+="<td>"+" "+arreglo[i].state+" "+"</td>";
+                tabla+="<td>"+" "+arreglo[i].seniority+" "+"</td>";
+                tabla+="<td>"+" "+arreglo[i].votes_with_party_pct+"%"+" "+"</td></tr>";
+              }
+              pro.innerHTML=tabla;
+          }
+
+          function onlyUnique(value, index, self) {
+              return self.indexOf(value) === index;
+          }
+
+          function getStates(arreglo){
+            var states=[];
+            for(var i=0;i<arreglo.length;i++){
+              states.push(arreglo[i].state);
+            }
+            return states;
+          }
+          var states = getStates(arreglo).filter(onlyUnique);
+
+          function cargarOpcionesSelect() {
+            var option = document.createElement("option");
+            option.setAttribute("NAME", "state");
+            option.setAttribute("VALUE", "All");
+            var node = document.createTextNode("All");
+            option.appendChild(node);
+            var element = document.getElementById("state-filter-h");
+            element.appendChild(option);
+            for(var i=0;i<states.length;i++){
+              var option = document.createElement("option");
+              option.setAttribute("VALUE", states[i]);
+              var node = document.createTextNode(states[i]);
+              option.appendChild(node);
+
+              var element = document.getElementById("state-filter-h");
+              element.appendChild(option);
+            }
+          }
+
+          function getSelectedState(){
+            var selectedFilter = document.getElementById('state-filter-h').selectedOptions[0].text;
+            return selectedFilter;
+          }
+          window.onload = () => {
+            cargarOpcionesSelect();
+            getSelectedState();
+            selectedStates = getSelectedState();
+          }
+
+          function filtrarTablaCheckbox () {
+            arrayAux = [];
+              let checkboxDemocrata = document.getElementById('democrata-checkbox-h');
+              let checkboxIndependiente = document.getElementById('independiente-checkbox-h');
+              let checkboxRepublicanos = document.getElementById('republicano-checkbox-h');
+              if(checkboxDemocrata.checked) {
+                arrayAux.push('D');
+              }
+              if(checkboxIndependiente.checked) {
+                arrayAux.push('I');
+              }
+              if(checkboxRepublicanos.checked) {
+                  arrayAux.push('R');
+              }
+
+              return filtrarMiembrosPorPartido(arrayAux);
+          }
+
+          function filtrarMiembrosPorPartido(arrayAux) {
+              let arregloFiltrado = [];
+              for(let i = 0; i<arreglo.length; i++) {
+                let elemento = arreglo[i];
+                if(dobleValidacion(elemento)){
+                  arregloFiltrado.push(elemento);
+                }
+              }
+              return arregloFiltrado;
+          }
+
+          function dobleValidacion(elemento) {
+              for(let i = 0; i < arrayAux.length; i++) {
+                if(arrayAux[i] == elemento.party) {
+                  if(getSelectedState() == "All" || getSelectedState() == elemento.state) {
+                    return true;
+                  }
+                }
+              }
+              return false;
+          }
+
+            var arreglo = valor.results[0].members;
+            dibujarTablaRepresentantes(arreglo);
+        </script>
     </body>
 </html>

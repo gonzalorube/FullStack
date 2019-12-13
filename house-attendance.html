@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <link rel="shortcut icon" href="images/favicon.ico"> <!-- favicon del sitio -->
+      <title>House Attendance</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Establece que sea adaptativo, y la escala inicial del zoom -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- Latest compiled and minified CSS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> <!-- Librería JQuery -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> <!-- Latest compiled JavaScript -->
+
+      <style>
+    /* Quito los márgenes y bordes predeterminados por bootstrap para navbar */
+        .navbar {
+          margin-bottom: 0;
+          border-radius: 0;
+        }
+
+    /* Le agrego un fondo gris claro y algo de margen al footer   */
+        footer {
+          background-color: #f2f2f2;
+          padding: 25px;
+          margin-top: 300px;
+        }
+
+    /* Logo a la izquierda, y tamaño */
+        .logo {
+          float: left;
+          width: 20px;
+          height: auto;
+        }
+
+    /* Padding al título de sitio para que no se pegue al logo */
+        .TGIF {
+          padding-left: 30px;
+        }
+
+        .textTable {
+          margin-top: 55px;
+        }
+
+        #FilterForm-h {
+          float: right;
+        }
+      </style>
+    </head>
+
+    <body>
+      <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
+          <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <!-- navbar colapsable, para que no ocupe tanto espacio al adaptarse a pantallas más chicas; esconde el menú en el botón -->
+               <span class="icon-bar"></span> <!-- cada una de las líneas que conforman el 'ícono' de este menú -->
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><img class="logo" src="images/logo-mod2.png" alt="logo TGIF">
+                <div class="TGIF">TGIF</div> <!-- el título del sitio incorporado a navbar -->
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar"> <!-- el div al que apunta el botón con el que se colapsa -->
+              <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li> <!-- link al Home -->
+                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                    </ul>
+                </li>
+                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Attendance <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="senate-attendance.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="#">House</a></li> <!-- link a House-->
+                    </ul>
+                </li>
+                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                    </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="container textTable">
+          <div class="row"> <!-- Comienzo contenedor 1 -->
+              <div class="col-xs-12 col-sm-6">
+                  <h1>Attendance</h1>
+                  <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.</p>
+
+                  <p>The Congressmen uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                  <h3 class="alignRight">House at a glance</h3>
+                  <!--Table container-->
+                  <table class="table table-responsive tableBorder">
+                      <thead>
+                          <tr>
+                              <th>Party</th>
+                              <th>Number of Reps</th>
+                              <th>% Voted with Party</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>Democrat</td>
+                              <td id="totD"></td>
+                              <td id="totPorcD"></td>
+                          </tr>
+                          <tr>
+                              <td>Republican</td>
+                              <td id="totR"></td>
+                              <td id="totPorcR"></td>
+                          </tr>
+                          <tr>
+                              <td>Independent</td>
+                              <td id="totI"></td>
+                              <td id="totPorcI"></td>
+                          </tr>
+                          <tr>
+                              <td>Total</td>
+                              <td id="totales"></td>
+                              <td id="totalPorc"></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div> <!-- Fin contenedor 1 -->
+          </div>
+        </div>
+          <hr>
+        <div class="container textTable">
+          <div class="row">  <!-- Comienzo contenedor 2 -->
+              <div class="col-xs-12 col-sm-6">
+                  <h3>Least Engaged (Bottom 10% Attendance)</h3>
+                  <table class="table tableBorder" id= "worstTable"></table>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                  <h3>Most Engaged (Top 10% Attendance)</h3>
+                  <table class="table tableBorder" id= "bestTable"></table>
+              </div>
+          </div> <!-- Fin contenedor 2 -->
+        </div>
+
+
+      <!-- Footer de página -->
+          <footer class="page-footer">
+            <div class="container-fluid text-center">
+              <p>&copy; 2016 TGIF | All Rights Reserved</p>
+            </div>
+          </footer>
+      </div>
+      <script src="pro-congress-113-house.js"></script>
+      <script src="function-stats-att.js"></script>
+</body>
+</html>
