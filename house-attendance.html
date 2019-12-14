@@ -9,6 +9,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- Latest compiled and minified CSS -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> <!-- Librería JQuery -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> <!-- Latest compiled JavaScript -->
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
       <style>
     /* Quito los márgenes y bordes predeterminados por bootstrap para navbar */
@@ -47,7 +48,7 @@
     </head>
 
     <body>
-      <div>
+      <div class="container" id="app">
         <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
           <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
             <div class="navbar-header">
@@ -80,8 +81,8 @@
                 <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
-                      <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                      <li><a href="senate-loyalty.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="house-loyalty.html">House</a></li> <!-- link a House-->
                     </ul>
                 </li>
               </ul>
@@ -91,18 +92,104 @@
             </div>
           </div>
         </nav>
-        <div class="container textTable">
-          <div class="row"> <!-- Comienzo contenedor 1 -->
-              <div class="col-xs-12 col-sm-6">
+
+        <!--Table container-->
+        <div class="row container textTable"> <!-- Comienzo contenedor 1 -->
+            <div class="col-xs-12 col-sm-6">
+                <h2>Attendance</h2>
+                <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.</p>
+
+                <p>The Congressmen uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <h3 class="alignRight">House at a glance</h3>
+                <table class="table tableBorder">
+                    <thead>
+                        <tr>
+                            <th>Party</th>
+                            <th>Number of Reps</th>
+                            <th>% Voted with Party</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Democrat</td>
+                            <td id="totD">{{ estadTotal.totD}}</td>
+                            <td id="totPorcD">{{ estadTotal.totPorcD}}</td>
+                        </tr>
+                        <tr>
+                            <td>Republican</td>
+                            <td id="totR">{{ estadTotal.totR}}</td>
+                            <td id="totPorcR">{{ estadTotal.totPorcR}}</td>
+                        </tr>
+                        <tr>
+                            <td>Independent</td>
+                            <td id="totI">{{ estadTotal.totI}}</td>
+                            <td id="totPorcI">{{ estadTotal.totPorcI}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="totales">{{ estadTotal.totales}}</td>
+                            <td id="totatesPorc">{{ estadTotal.totalPorc}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- Fin contenedor 1 -->
+        </div>
+        <hr>
+        <div class="row container textTable">  <!-- Comienzo contenedor 2 -->
+            <div class="col-xs-12 col-sm-6">
+                <h3>Least Engaged (Bottom 10% Attendance)</h3>
+                <table class="table tableBorder" id= "jsonData">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Missed Votes</th>
+                            <th>% Missed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="person in estadTotal.least_engange">
+                            <td class="link"><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}} {{person.last_name}}</a></td>
+                            <td>{{person.missed_votes}}</td>
+                            <td>{{person.missed_votes_pct}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <h3>Most Engaged (Top 10% Attendance)</h3>
+                <table class="table tableBorder" id= "jsonData">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Missed Votes</th>
+                            <th>% Missed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="person in estadTotal.most_engange">
+                            <td class="link"><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}} {{person.last_name}}</a></td>
+                            <td>{{person.missed_votes}}</td>
+                            <td>{{person.missed_votes_pct}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- Fin contenedor 2 -->
+
+  <!--      <div class="container textTable">
+          <div class="row"> --><!-- Comienzo contenedor 1 -->
+    <!--          <div class="col-xs-12 col-sm-6">
                   <h1>Attendance</h1>
                   <p>The Constitution specifies that a majority of members constitutes a quorum to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum calls; thus, in most cases, debates continue even if a majority is not present.</p>
 
                   <p>The Congressmen uses roll-call votes; a clerk calls out the names of all the senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally, members vote by electronic device. In the case of a tie, the motion in question fails. In the Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
               </div>
               <div class="col-xs-12 col-sm-6">
-                  <h3 class="alignRight">House at a glance</h3>
+                  <h3 class="alignRight">House at a glance</h3>-->
                   <!--Table container-->
-                  <table class="table table-responsive tableBorder">
+    <!--              <table class="table table-responsive tableBorder">
                       <thead>
                           <tr>
                               <th>Party</th>
@@ -133,13 +220,13 @@
                           </tr>
                       </tbody>
                   </table>
-              </div> <!-- Fin contenedor 1 -->
-          </div>
+              </div> --><!-- Fin contenedor 1 -->
+<!--          </div>
         </div>
           <hr>
         <div class="container textTable">
-          <div class="row">  <!-- Comienzo contenedor 2 -->
-              <div class="col-xs-12 col-sm-6">
+          <div class="row"> --> <!-- Comienzo contenedor 2 -->
+<!--              <div class="col-xs-12 col-sm-6">
                   <h3>Least Engaged (Bottom 10% Attendance)</h3>
                   <table class="table tableBorder" id= "worstTable"></table>
               </div>
@@ -147,8 +234,8 @@
                   <h3>Most Engaged (Top 10% Attendance)</h3>
                   <table class="table tableBorder" id= "bestTable"></table>
               </div>
-          </div> <!-- Fin contenedor 2 -->
-        </div>
+          </div> --><!-- Fin contenedor 2 -->
+<!--        </div>-->
 
 
       <!-- Footer de página -->
@@ -157,8 +244,11 @@
               <p>&copy; 2016 TGIF | All Rights Reserved</p>
             </div>
           </footer>
+
+          <script>var opc = "house"</script>
+          <script src="function-stats-att.js"></script>
       </div>
-      <script src="pro-congress-113-house.js"></script>
-      <script src="function-stats-att.js"></script>
+<!--      <script src="pro-congress-113-house.js"></script>
+      <script src="function-stats-att.js"></script>-->
 </body>
 </html>

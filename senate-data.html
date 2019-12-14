@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> <!-- Latest compiled and minified CSS -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> <!-- Librería JQuery -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> <!-- Latest compiled JavaScript -->
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
       <style>
     /* Quito los márgenes y bordes predeterminados por bootstrap para navbar */
@@ -39,77 +40,128 @@
           margin-top: 55px;
         }
 
-        #FilterForm {
+        #states, #filterForm {
           float: right;
         }
       </style>
     </head>
 
     <body>
-    <!-- Mi barra de navegación incluye el título del sitio -->
-    <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
-      <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <!-- navbar colapsable, para que no ocupe tanto espacio al adaptarse a pantallas más chicas; esconde el menú en el botón -->
-           <span class="icon-bar"></span> <!-- cada una de las líneas que conforman el 'ícono' de este menú -->
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="logo" src="images/logo-mod2.png" alt="logo TGIF">
-            <div class="TGIF">TGIF</div> <!-- el título del sitio incorporado a navbar -->
-          </a>
+      <div class="container" id="app">
+        <!-- Mi barra de navegación incluye el título del sitio -->
+        <nav class="navbar navbar-inverse navbar-fixed-top"> <!-- estilo de barra on bootstrap, oscura -->
+          <div class="container"> <!-- container, porque me gusta más cómo alínea el texto en pantallas grandes -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"> <!-- navbar colapsable, para que no ocupe tanto espacio al adaptarse a pantallas más chicas; esconde el menú en el botón -->
+               <span class="icon-bar"></span> <!-- cada una de las líneas que conforman el 'ícono' de este menú -->
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><img class="logo" src="images/logo-mod2.png" alt="logo TGIF">
+                <div class="TGIF">TGIF</div> <!-- el título del sitio incorporado a navbar -->
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar"> <!-- el div al que apunta el botón con el que se colapsa -->
+              <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li> <!-- link al Home -->
+                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="house-data.html">House</a></li> <!-- link a House-->
+                    </ul>
+                </li>
+                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Attendance <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="senate-attendance.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="house-attendance.html">House</a></li> <!-- link a House-->
+                    </ul>
+                </li>
+                <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="senate-loyalty.html">Senate</a></li> <!-- no enlaza a la propia página -->
+                      <li><a href="house-loyalty.html">House</a></li> <!-- link a House-->
+                    </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="container textTable">
+            <div class="col-xs-12 col-sm-10">
+                <h2>Senators</h2>
+                <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+            </div>
+
+
+
+            <div id="chqkboxName" class="col-xs-12 col-sm-7" >
+                Filter by Party:
+                <input type="checkbox" name="selParty" value="D" onchange="updateUI()" checked>Democrat
+                <input type="checkbox" name="selParty" value="R" onchange="updateUI()" checked>Republican
+                <input type="checkbox" name="selParty" value="I" onchange="updateUI()" checked>Independent
+            </div>
+            <div class="col-xs-12 col-sm-5">
+                <form id="filterForm">
+                    Filter by State:
+                    <select id="states" onchange="updateUI()">
+                        <option value="">ALL States</option>
+                        <option v-for="state in states" value: state>{{state}}</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="col-xd-12">
+                <table class="table" id= "jsonData">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Party</th>
+                            <th>State</th>
+                            <th>Years in Office</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody class="deGaby">
+                        <tr v-for="person in candidates">
+                            <td class="link"><a v-bind:href="person.url" target="_blank">{{person.first_name}} {{person.middle_name}} {{person.last_name}}</a></td>
+                            <td class="buscaParty">{{person.party}}</td>
+                            <td class="buscaState">{{person.state}}</td>
+                            <td>{{person.seniority}}</td>
+                            <td>{{person.votes_with_party_pct}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar"> <!-- el div al que apunta el botón con el que se colapsa -->
-          <ul class="nav navbar-nav">
-            <li><a href="home.html">Home</a></li> <!-- link al Home -->
-            <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113 <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Senate</a></li> <!-- no enlaza a la propia página -->
-                  <li><a href="house-data.html">House</a></li> <!-- link a House-->
-                </ul>
-            </li>
-            <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Attendance <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="senate-attendance.html">Senate</a></li> <!-- no enlaza a la propia página -->
-                  <li><a href="house-attendance.html">House</a></li> <!-- link a House-->
-                </ul>
-            </li>
-            <li class="dropdown"> <!-- lista en calidad de desplegable descendente, 'dropdown'-->
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="senate-data.html">Senate</a></li> <!-- no enlaza a la propia página -->
-                  <li><a href="house-data.html">House</a></li> <!-- link a House-->
-                </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="mailto:info@tgif.net"><span class="glyphicon glyphicon-envelope"></span>  info@tgif.net</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
-        <div class="container textTable"> <!-- container, para que también sea adaptativa -->
+<!--        <div class="container textTable"> <!-- container, para que también sea adaptativa -->
 
-          <h2>Senators</h2> <!-- el subtítulo y texto están en el mismo div que la tabla -->
-          <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-
+<!--          <h2>Senators</h2>--> <!-- el subtítulo y texto están en el mismo div que la tabla -->
+<!--          <p>First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+-->
           <!-- la tabla es adaptativa; las otras características disponibles alteraban la maquetación en una forma que no preferí -->
-          <div class="table-responsive">
-            <div>
+<!--          <div class="table-responsive">
+            <div>-->
               <!-- Filtro de Estados -->
-              <form name="filter" id="FilterForm" action="" method="">
-                <label for="state-filter">Filter by State:
+<!--              <form name="filter" id="FilterForm" action="" method="">
+                <label for="state-filter">Filter by State:-->
                 <!-- Ante un cambio en la selección, se dispara el mismo método que en filtro de Partido -->
-                <select id="state-filter" class="filter" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())"></select>
+<!--                <select id="state-filter" class="filter" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())"></select>
               </form>
 
             </div>
-            <div>
+            <div>-->
               <!-- Filtro de Partidos -->
-              <form>
+<!--              <form>
                 <label for="checkbox">Filter by Party:
                 <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="republicano-checkbox" checked>Republican
                 <input type="checkbox" onchange="dibujarTablaRepresentantes(filtrarTablaCheckbox())" id="democrata-checkbox" checked>Democrat
@@ -119,7 +171,7 @@
 
             <table class="table" id="senate-data"></table>
           </div>
-        </div>
+        </div> -->
 
       <!-- Footer, con estilo de footer y texto centrado, ajustado también con CSS en el head -->
         <footer class="page-footer">
@@ -127,8 +179,12 @@
             <p>&copy; 2016 TGIF | All Rights Reserved</p>
           </div>
         </footer>
+
+        <script>var opc = "senate"</script>
+        <script src="function-stats-att.js"></script>
+      </div>
         <!-- Script que conecta con el JSON devenido en JS -->
-        <script src="pro-congress-113-senate.js"></script>
+<!--        <script src="pro-congress-113-senate.js"></script>
 
         <script type="text/javascript">
 
@@ -257,6 +313,6 @@
 
           var arreglo = valor.results[0].members;
           dibujarTablaRepresentantes(arreglo);
-        </script>
+        </script>-->
     </body>
 </html>
